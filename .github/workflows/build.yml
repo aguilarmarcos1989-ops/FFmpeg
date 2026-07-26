@@ -7,10 +7,10 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Descargar código fuente de dev-lynne
+      - name: Descargar código fuente de cyanreg (Lynne)
         uses: actions/checkout@v4
         with:
-          repository: dev-lynne/FFmpeg
+          repository: cyanreg/FFmpeg
           fetch-depth: 0
 
       - name: Configurar entorno MSYS2
