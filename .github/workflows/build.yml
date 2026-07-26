@@ -1,0 +1,37 @@
+name: Compilar FFmpeg AAC (Lynne)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Descargar código fuente de dev-lynne
+        uses: actions/checkout@v4
+        with:
+          repository: dev-lynne/FFmpeg
+          fetch-depth: 0
+
+      - name: Configurar entorno MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            git
+            make
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-yasm
+
+      - name: Compilar FFmpeg
+        shell: msys2 {0}
+        run: |
+          ./configure --disable-shared --enable-static --extra-ldflags="-static"
+          make -j$(nproc)
+
+      - name: Guardar ejecutable (Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ffmpeg-aac-lynne
+          path: ffmpeg.exe
