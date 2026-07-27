@@ -7,13 +7,6 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Descargar código fuente de cyanreg (rama aac_improv2)
-        uses: actions/checkout@v4
-        with:
-          repository: cyanreg/FFmpeg
-          ref: aac_improv2
-          fetch-depth: 0
-
       - name: Configurar entorno MSYS2
         uses: msys2/setup-msys2@v2
         with:
@@ -24,6 +17,11 @@ jobs:
             make
             mingw-w64-x86_64-gcc
             mingw-w64-x86_64-yasm
+
+      - name: Descargar código fuente (rama aac_improv2 desde code.ffmpeg.org)
+        shell: msys2 {0}
+        run: |
+          git clone --depth 1 -b aac_improv2 https://code.ffmpeg.org/Lynne/FFmpeg.git .
 
       - name: Compilar FFmpeg
         shell: msys2 {0}
