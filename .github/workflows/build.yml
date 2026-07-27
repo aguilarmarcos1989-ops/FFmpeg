@@ -15,8 +15,10 @@ jobs:
           install: >-
             git
             make
+            nasm
             mingw-w64-x86_64-gcc
             mingw-w64-x86_64-yasm
+            mingw-w64-x86_64-nasm
 
       - name: Descargar código fuente (rama aac_improv2 desde code.ffmpeg.org)
         shell: msys2 {0}
