@@ -7,18 +7,18 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Configurar entorno MSYS2
+      - name: Configurar entorno MSYS2 (UCRT64)
         uses: msys2/setup-msys2@v2
         with:
-          msystem: MINGW64
+          msystem: UCRT64
           update: true
           install: >-
             git
             make
             nasm
-            mingw-w64-x86_64-gcc
-            mingw-w64-x86_64-yasm
-            mingw-w64-x86_64-nasm
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-yasm
+            mingw-w64-ucrt-x86_64-nasm
 
       - name: Descargar código fuente (rama aac_ne3 desde code.ffmpeg.org)
         shell: msys2 {0}
