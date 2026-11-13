@@ -1,0 +1,42 @@
+name: Compilar FFmpeg Windows
+
+on:
+  push:
+    branches:
+      - aac_ne3
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Descargar código del repositorio
+        uses: actions/checkout@v4
+        with:
+          ref: aac_ne3
+
+      - name: Instalar dependencias (MSYS2)
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            git
+            make
+            diffutils
+            pkg-config
+            mingw-w64-x86_64-toolchain
+            mingw-w64-x86_64-yasm
+            mingw-w64-x86_64-nasm
+
+      - name: Configurar y Compilar FFmpeg
+        shell: msys2 {0}
+        run: |
+          ./configure --enable-gpl --enable-version3 --disable-shared --enable-static
+          make -j$(nproc)
+
+      - name: Guardar ejecutable como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: ffmpeg-aac-ne3-windows
+          path: ffmpeg.exe
