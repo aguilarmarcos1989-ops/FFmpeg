@@ -1,4 +1,4 @@
-name: Compilar FFmpeg AAC (Lynne - aac_improv2)
+name: Compilar FFmpeg AAC (Lynne - aac_ne3)
 
 on:
   workflow_dispatch:
@@ -20,10 +20,10 @@ jobs:
             mingw-w64-x86_64-yasm
             mingw-w64-x86_64-nasm
 
-      - name: Descargar código fuente (rama aac_improv2 desde code.ffmpeg.org)
+      - name: Descargar código fuente (rama aac_ne3 desde code.ffmpeg.org)
         shell: msys2 {0}
         run: |
-          git clone --depth 1 -b aac_improv2 https://code.ffmpeg.org/Lynne/FFmpeg.git .
+          git clone --depth 1 -b aac_ne3 https://code.ffmpeg.org/Lynne/FFmpeg.git .
 
       - name: Compilar FFmpeg
         shell: msys2 {0}
@@ -34,5 +34,5 @@ jobs:
       - name: Guardar ejecutable (Artifact)
         uses: actions/upload-artifact@v4
         with:
-          name: ffmpeg-aac-improv2
+          name: ffmpeg-aac-ne3
           path: ffmpeg.exe
